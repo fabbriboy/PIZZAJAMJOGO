@@ -1,4 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://bsywgjg177p18"]
+[gd_scene load_steps=6 format=3 uid="uid://bsywgjg177p18"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_k150d"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_jgwwa"]
+sky_material = SubResource("ProceduralSkyMaterial_k150d")
+
+[sub_resource type="Environment" id="Environment_01u8t"]
+background_mode = 2
+sky = SubResource("Sky_jgwwa")
+tonemap_mode = 2
+glow_enabled = true
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_k150d"]
 
@@ -7,8 +20,22 @@ data = PackedVector3Array(0, 1, 0, 0, 1, 0, 0, 0.9924, -0.0868, 0, 1, 0, -0.0085
 
 [node name="Node3D" type="Node3D"]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_01u8t")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6325, 0)
 mesh = SubResource("CapsuleMesh_k150d")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6325, 0)
 shape = SubResource("ConcavePolygonShape3D_jgwwa")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+size = Vector3(20, 1, 20)
